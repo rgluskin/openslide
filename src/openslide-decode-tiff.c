@@ -307,7 +307,12 @@ bool _openslide_tiff_read_tile(struct _openslide_tiff_level *tiffl,
     // from decode_tile (in openslide-vendor-aperio) if _openslide_tiff_read_tile
     // returns false.
     const unsigned char *bytes = buf;
-    if (bytes[0] == 0x11 || (bytes[0] == 0xff && bytes[1] == 0x11) || (bytes[0] == 0xff && bytes[1] == 0x10))
+    if (
+        bytes[0] == 0x11 || 
+        (bytes[0] == 0xff && bytes[1] == 0x11) || 
+        (bytes[0] == 0xff && bytes[1] == 0x10) ||
+        (bytes[0] == 0x10 && bytes[1] == 0x00)
+       )
       return false; // Garbled tile
 
     // decompress
